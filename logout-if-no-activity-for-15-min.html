@@ -1,0 +1,43 @@
+<body onload="StartTimers();" onmousemove="ResetTimers();">
+  <div id="timeout">
+    <h1>Session About To Timeout</h1>
+    <p>You will be automatically logged out in 1 minute.<br />
+    To remain logged in move your mouse over this window.
+  </div>
+  <script>
+    // Set timeout variables.
+    var timoutWarning = 840000; // Display warning in 14 Mins.
+    var timoutNow = 900000; // Timeout in 15 mins.
+    var logoutUrl = 'http://domain.com/logout.aspx'; // URL to logout page.
+
+    var warningTimer;
+    var timeoutTimer;
+
+    // Start timers.
+    function StartTimers() {
+        warningTimer = setTimeout("IdleWarning()", timoutWarning);
+        timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
+    }
+
+    // Reset timers.
+    function ResetTimers() {
+        clearTimeout(warningTimer);
+        clearTimeout(timeoutTimer);
+        StartTimers();
+        $("#timeout").dialog('close');
+    }
+
+    // Show idle timeout warning dialog.
+    function IdleWarning() {
+        $("#timeout").dialog({
+            modal: true
+        });
+    }
+
+    // Logout the user.
+    function IdleTimeout() {
+        window.location = logoutUrl;
+    }
+  </script>
+
+</body>
